@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: Payment Gateway API
+  version: 1.0.0
+  description: API for processing payments.
+paths:
+  /payments:
+    post:
+      summary: Process a payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderId:
+                  type: integer
+                amount:
+                  type: number
+                  format: float
+                paymentMethod:
+                  type: string
+                  enum:
+                    - credit_card
+                    - paypal
+      responses:
+        '200':
+          description: Payment processed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  paymentId:
+                    type: integer
+                  status:
+                    type: string
+        '400':
+          description: Bad request, invalid payment details
+        '500':
+          description: Internal server error
